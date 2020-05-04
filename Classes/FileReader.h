@@ -4,6 +4,7 @@
 #include <string>
 #include <mutex>
 #include <optional>
+#include <filesystem>
 
 class FileReader
 {
@@ -39,6 +40,12 @@ private:
 
 class FileReaderProducerConsumerMutex
 {
+	struct STask
+	{
+		std::function<std::filesystem::directory_entry()> fn;
+		bool done;
+	};
+
 public:
 	void Process(const char* path);
 	void Produce();
@@ -48,11 +55,7 @@ public:
 private:
 
 
-	struct STask
-	{
-		std::function<std::filesystem::directory_entry()> fn;
-		bool done;
-	};
+
 
 
 	std::unordered_map<std::string, int> words_;

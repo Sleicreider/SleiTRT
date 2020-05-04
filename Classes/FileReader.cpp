@@ -10,6 +10,10 @@
 
 void FileReader::Process(const char* path)
 {
+	auto b = ~(0xffffffff << static_cast<unsigned int>(15));
+
+	auto a = (1 << (15+1)) - 1;
+
 	FrameworkTimer t;
 	auto start = t.GetCurrentTimeInMilliseconds().count();
 
@@ -143,7 +147,7 @@ void FileReaderMutex2::Process(const char* path)
 }
 
 
-void FileReaderProducerConsumerMutex::Process()
+void FileReaderProducerConsumerMutex::Process(const char* path)
 {
 	FrameworkTimer t;
 	auto start = t.GetCurrentTimeInMilliseconds().count();
@@ -200,7 +204,7 @@ void FileReaderProducerConsumerMutex::Produce()
 
 	for (auto& slot : slots_)
 	{
-		slot = { [] {}, true };
+		slot = { nullptr, true };
 	}
 }
 
